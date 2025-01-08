@@ -1,39 +1,32 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <string.h>
 
-void main() {
-    int a[20], b[30], i, j, count, n;
+void bitStuffing() {
+    char input[100], stuffed[200];
+    int i, j = 0, count = 0;
 
-    printf("Enter frame size (Example: 8): ");
-    scanf("%d", &n);
-    
-    printf("Enter the frame (only 0's and 1's): ");
-    for(i = 0; i < n; i++) {
-        scanf("%d", &a[i]);
-    }
+    printf("Enter the binary data to be transmitted: ");
+    scanf("%s", input);
 
-    i = 0;
-    j = 0;
-    count = 0;
-
-    while(i < n) {
-        b[j++] = a[i];
-
-        if(a[i] == 1) {
+    for (i = 0; i < strlen(input); i++) {
+        if (input[i] == '1') {
             count++;
         } else {
             count = 0;
         }
+        stuffed[j++] = input[i];
 
-        if(count == 5) {
-            b[j++] = 0;
+        if (count == 5) { // After 5 consecutive 1s, stuff a 0
+            stuffed[j++] = '0';
             count = 0;
         }
-
-        i++;
     }
+    stuffed[j] = '\0';
 
-    printf("After Bit Stuffing: ");
-    for(i = 0; i < j; i++) {
-        printf("%d", b[i]);
-    }
+    printf("Stuffed data: %s\n", stuffed);
+}
+
+int main() {
+    bitStuffing();
+    return 0;
 }
